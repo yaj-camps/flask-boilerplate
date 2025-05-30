@@ -8,6 +8,9 @@ import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
+from routes.notes_api import notes_bp
+
+
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -15,6 +18,8 @@ import os
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+app.register_blueprint(notes_bp)
 #db = SQLAlchemy(app)
 
 # Automatically tear down SQLAlchemy.
@@ -90,6 +95,11 @@ if not app.debug:
     file_handler.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
     app.logger.info('errors')
+
+@app.route('/notes')
+def notes_page():
+    return render_template('pages/notes.html')
+
 
 #----------------------------------------------------------------------------#
 # Launch.
