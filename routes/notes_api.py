@@ -5,6 +5,34 @@ notes_bp = Blueprint('notes', __name__, url_prefix='/api/notes')
 
 @notes_bp.route('', methods=['POST'])
 def create_note():
+    """
+    Create a new note
+    ---
+    tags:
+      - Notes
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - title
+            properties:
+              title:
+                type: string
+              content:
+                type: string
+    responses:
+      201:
+        description: Note created successfully
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Note'
+      400:
+        description: Missing required field
+    """
     data = request.get_json()
     if not data or not data.get('title'):
         return jsonify({'error': 'Title is required'}), 400

@@ -9,6 +9,9 @@ from logging import Formatter, FileHandler
 from forms import *
 import os
 from routes.notes_api import notes_bp
+from flasgger import Swagger
+
+
 
 
 
@@ -20,6 +23,24 @@ app = Flask(__name__)
 app.config.from_object('config')
 
 app.register_blueprint(notes_bp)
+
+
+swagger = Swagger(app, template={
+    "components": {
+        "schemas": {
+            "Note": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer"},
+                    "title": {"type": "string"},
+                    "content": {"type": "string"}
+                }
+            }
+        }
+    }
+})
+
+
 #db = SQLAlchemy(app)
 
 # Automatically tear down SQLAlchemy.

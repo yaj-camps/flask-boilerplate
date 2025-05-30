@@ -1,7 +1,9 @@
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime
 from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from datetime import datetime
+from sqlalchemy.orm import declarative_base
+from datetime import datetime, timezone
+created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
 
 # from sqlalchemy import Column, Integer, String
 # from app import db
